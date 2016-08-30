@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		EF3501921D70BC620036C39E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3501911D70BC620036C39E /* AppDelegate.swift */; };
-		EF3501941D70BC620036C39E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3501931D70BC620036C39E /* ViewController.swift */; };
+		EF3501941D70BC620036C39E /* CardCheckerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3501931D70BC620036C39E /* CardCheckerViewController.swift */; };
 		EF3501971D70BC620036C39E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3501951D70BC620036C39E /* Main.storyboard */; };
 		EF3501991D70BC620036C39E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF3501981D70BC620036C39E /* Assets.xcassets */; };
 		EF35019C1D70BC620036C39E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF35019A1D70BC620036C39E /* LaunchScreen.storyboard */; };
+		EF3501A41D71F4F00036C39E /* CardCheckerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3501A31D71F4F00036C39E /* CardCheckerClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EF35018E1D70BC620036C39E /* CardChecker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardChecker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3501911D70BC620036C39E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EF3501931D70BC620036C39E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF3501931D70BC620036C39E /* CardCheckerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCheckerViewController.swift; sourceTree = "<group>"; };
 		EF3501961D70BC620036C39E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EF3501981D70BC620036C39E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF35019B1D70BC620036C39E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF35019D1D70BC620036C39E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF3501A31D71F4F00036C39E /* CardCheckerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCheckerClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				EF3501911D70BC620036C39E /* AppDelegate.swift */,
-				EF3501931D70BC620036C39E /* ViewController.swift */,
+				EF3501931D70BC620036C39E /* CardCheckerViewController.swift */,
 				EF3501951D70BC620036C39E /* Main.storyboard */,
 				EF3501981D70BC620036C39E /* Assets.xcassets */,
 				EF35019A1D70BC620036C39E /* LaunchScreen.storyboard */,
 				EF35019D1D70BC620036C39E /* Info.plist */,
+				EF3501A31D71F4F00036C39E /* CardCheckerClient.swift */,
 			);
 			path = CardChecker;
 			sourceTree = "<group>";
@@ -135,7 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF3501941D70BC620036C39E /* ViewController.swift in Sources */,
+				EF3501A41D71F4F00036C39E /* CardCheckerClient.swift in Sources */,
+				EF3501941D70BC620036C39E /* CardCheckerViewController.swift in Sources */,
 				EF3501921D70BC620036C39E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +290,7 @@
 				EF3501A21D70BC620036C39E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

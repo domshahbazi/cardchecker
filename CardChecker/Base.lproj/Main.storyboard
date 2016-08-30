@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Card Checker View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CardCheckerViewController" customModule="CardChecker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,59 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter card number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="edA-gi-RK3">
+                                <rect key="frame" x="20" y="145" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJ3-0w-tts">
+                                <rect key="frame" x="20" y="116" width="103" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bh3-7k-Hqm">
+                                <rect key="frame" x="268" y="242" width="64" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Check!"/>
+                                <connections>
+                                    <action selector="checkNumber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jK9-9s-YjP"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="xqz-kZ-VaY">
+                                <rect key="frame" x="282" y="305" width="37" height="37"/>
+                                <color key="color" red="1" green="0.020532956710662131" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4k-WR-N03">
+                                <rect key="frame" x="274" y="311" width="52" height="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="rJ3-0w-tts" secondAttribute="leading" id="1hF-dh-2Ao"/>
+                            <constraint firstItem="f4k-WR-N03" firstAttribute="top" secondItem="Bh3-7k-Hqm" secondAttribute="bottom" constant="33" id="53T-ag-BdQ"/>
+                            <constraint firstItem="edA-gi-RK3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="125" id="FvU-UB-Ny9"/>
+                            <constraint firstItem="Bh3-7k-Hqm" firstAttribute="centerX" secondItem="edA-gi-RK3" secondAttribute="centerX" id="HqI-f0-jtu"/>
+                            <constraint firstItem="edA-gi-RK3" firstAttribute="top" secondItem="rJ3-0w-tts" secondAttribute="bottom" constant="8" id="Mse-am-kUa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="edA-gi-RK3" secondAttribute="trailing" id="VNj-z4-Rx4"/>
+                            <constraint firstItem="Bh3-7k-Hqm" firstAttribute="top" secondItem="edA-gi-RK3" secondAttribute="bottom" constant="67" id="WOA-Qt-VXO"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="edA-gi-RK3" secondAttribute="leading" id="dg7-kh-ed0"/>
+                            <constraint firstItem="f4k-WR-N03" firstAttribute="centerX" secondItem="Bh3-7k-Hqm" secondAttribute="centerX" id="nK6-Pl-Uuh"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="xqz-kZ-VaY" id="Qtw-73-dKn"/>
+                        <outlet property="resultLabel" destination="f4k-WR-N03" id="ahA-ek-X7Y"/>
+                        <outlet property="textField" destination="edA-gi-RK3" id="IAS-TX-ESo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="200" y="339"/>
         </scene>
     </scenes>
 </document>
