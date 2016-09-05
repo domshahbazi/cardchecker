@@ -15,9 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let navController = window!.rootViewController as! UINavigationController
+        navController.setToolbarHidden(true, animated: false)
         
-        let initialViewController = (self.window?.rootViewController)! as! CardCheckerViewController
-        initialViewController.client = CardCheckerClient()
+        let cardCheckerViewController = navController.topViewController as! CardCheckerViewController
+        cardCheckerViewController.client = CardCheckerClient()
+        cardCheckerViewController.historyStore = HistoryStore()
+        
         return true
     }
 

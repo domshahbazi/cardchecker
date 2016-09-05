@@ -12,6 +12,16 @@ struct CardResult {
     var result: Bool
 }
 
+enum ValidateResult {
+    case Success(CardResult)
+    case Failure(ErrorType)
+}
+
+enum ClientError: ErrorType {
+    case RequestError
+    case InvalidJSONData
+}
+
 class CardCheckerClient {
     
     private let baseURLString = "http://192.168.1.119:5000/validate"
@@ -21,7 +31,7 @@ class CardCheckerClient {
         return NSURLSession(configuration: config)
     }()
     
-    func validateCardNumber(cardNumber: String, completion: (result: CardResult) -> Void) {
+    func validateCardNumber(cardNumber: String, completion: (result: ValidateResult) -> Void) {
         
         let url = buildURL(cardNumber)!
         let request = NSURLRequest(URL: url)
@@ -30,46 +40,38 @@ class CardCheckerClient {
             
             if let jsonData = data {
                 let result = self.resultFromJSONData(jsonData)
-                completion(result: result!)
+                completion(result: result)
             }
             else if let requestError = error {
-                print("Error validating card number: \(requestError)")
-            }
-            else {
-                print("Unexpected error with request")
-            
+                completion(result: ValidateResult.Failure(requestError))
             }
         }
         task.resume()
     }
     
     // needs cleaning up massively
-    private func resultFromJSONData(data: NSData) -> CardResult? {
+    private func resultFromJSONData(data: NSData) -> ValidateResult {
+        
         do {
             let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: [])
             guard let dict = jsonObject as? [String: AnyObject],
                 let number = dict["number"] as? String,
                 let valid = dict["valid"] as? Bool
-                else { return nil }
+                else { return ValidateResult.Failure(ClientError.InvalidJSONData) }
             
-            return CardResult(cardNumber: number, result: valid)
+            return ValidateResult.Success(CardResult(cardNumber: number, result: valid))
             
         } catch let error {
-            print("Error parsing JSON: \(error)")
+            return ValidateResult.Failure(error)
         }
-        
-        return nil
     }
     
     private func buildURL(cardNumber: String) -> NSURL? {
         
         let components = NSURLComponents(string: baseURLString)!
-        
         let item = NSURLQueryItem(name: "cardnumber", value: cardNumber)
-        
         var queryItems = [NSURLQueryItem]()
         queryItems.append(item)
-        
         components.queryItems = queryItems
         
         return components.URL!
