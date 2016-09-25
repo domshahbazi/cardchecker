@@ -10,6 +10,7 @@ import UIKit
 
 class CardCheckerViewController: UIViewController {
 
+    @IBOutlet weak var checkButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var resultLabel: UILabel!
@@ -17,7 +18,7 @@ class CardCheckerViewController: UIViewController {
     var client: CardCheckerClient!
     var historyStore: HistoryStore!
     
-    @IBAction func checkNumber(sender: UIButton) {
+    @IBAction func checkNumber(_ sender: UIButton) {
         
         activityIndicator.startAnimating()
         
@@ -26,28 +27,28 @@ class CardCheckerViewController: UIViewController {
             (result: ValidateResult) -> Void in
             
             // Update the UI on the main thread rather then background thread
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 
                 switch result {
-                    case let ValidateResult.Success(cardResult):
+                    case let ValidateResult.success(cardResult):
                         if(cardResult.result) {
-                            self.setResultLabel("Valid", color: UIColor.greenColor())
+                            self.setResultLabel("Valid", color: UIColor.green)
                         } else {
-                            self.setResultLabel("Invalid", color: UIColor.redColor())
+                            self.setResultLabel("Invalid", color: UIColor.red)
                         }
                     
                         self.historyStore.addResult(cardResult)
                     
-                    case ValidateResult.Failure(_):
-                        self.setResultLabel("Error!", color: UIColor.redColor())
+                    case ValidateResult.failure(_):
+                        self.setResultLabel("Error!", color: UIColor.red)
                 }
-                self.resultLabel.hidden = false
+                self.resultLabel.isHidden = false
             })
         }
         activityIndicator.stopAnimating()
     }
     
-    private func setResultLabel(text: String, color: UIColor) {
+    fileprivate func setResultLabel(_ text: String, color: UIColor) {
         self.resultLabel.text = text
         self.resultLabel.textColor = color
     }
@@ -58,6 +59,12 @@ class CardCheckerViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CardCheckerViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
+        // Add rounded corners to button
+        checkButton.layer.cornerRadius = 5;
+        checkButton.layer.masksToBounds = true;
+        
+        checkButton.layer.borderWidth = 2.0
+        checkButton.layer.borderColor = UIColor.white.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,13 +77,27 @@ class CardCheckerViewController: UIViewController {
         view.endEditing(true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // if the triggered seque is the showiItem seque
         if segue.identifier == "ShowHistory" {
-            let historyViewController = segue.destinationViewController as! HistoryViewController
+            let historyViewController = segue.destination as! HistoryViewController
             historyViewController.historyStore = historyStore
         }
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        // Underline the text field
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.white.cgColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  textField.frame.size.width, height: textField.frame.size.height)
+        
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
+    
+    }
+    
 }
+
 

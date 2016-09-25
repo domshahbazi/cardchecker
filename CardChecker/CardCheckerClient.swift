@@ -13,68 +13,68 @@ struct CardResult {
 }
 
 enum ValidateResult {
-    case Success(CardResult)
-    case Failure(ErrorType)
+    case success(CardResult)
+    case failure(Error)
 }
 
-enum ClientError: ErrorType {
-    case RequestError
-    case InvalidJSONData
+enum ClientError: Error {
+    case requestError
+    case invalidJSONData
 }
 
 class CardCheckerClient {
     
-    private let baseURLString = "http://192.168.1.119:5000/validate"
+    fileprivate let baseURLString = "http://192.168.1.119:5000/validate"
     
-    let session: NSURLSession = {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        return NSURLSession(configuration: config)
+    let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        return URLSession(configuration: config)
     }()
     
-    func validateCardNumber(cardNumber: String, completion: (result: ValidateResult) -> Void) {
+    func validateCardNumber(_ cardNumber: String, completion: @escaping (_ result: ValidateResult) -> Void) {
         
         let url = buildURL(cardNumber)!
-        let request = NSURLRequest(URL: url)
-        let task = session.dataTaskWithRequest(request) {
+        let request = URLRequest(url: url)
+        let task = session.dataTask(with: request, completionHandler: {
             (data, response, error) -> Void in
             
             if let jsonData = data {
                 let result = self.resultFromJSONData(jsonData)
-                completion(result: result)
+                completion(result)
             }
             else if let requestError = error {
-                completion(result: ValidateResult.Failure(requestError))
+                completion(ValidateResult.failure(requestError))
             }
-        }
+        }) 
         task.resume()
     }
     
     // needs cleaning up massively
-    private func resultFromJSONData(data: NSData) -> ValidateResult {
+    fileprivate func resultFromJSONData(_ data: Data) -> ValidateResult {
         
         do {
-            let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-            guard let dict = jsonObject as? [String: AnyObject],
+            let jsonObject: Any = try JSONSerialization.jsonObject(with: data, options: [])
+            guard let dict = jsonObject as? [String: Any],
                 let number = dict["number"] as? String,
                 let valid = dict["valid"] as? Bool
-                else { return ValidateResult.Failure(ClientError.InvalidJSONData) }
+                else { return ValidateResult.failure(ClientError.invalidJSONData) }
             
-            return ValidateResult.Success(CardResult(cardNumber: number, result: valid))
+            return ValidateResult.success(CardResult(cardNumber: number, result: valid))
             
         } catch let error {
-            return ValidateResult.Failure(error)
+            return ValidateResult.failure(error)
         }
     }
     
-    private func buildURL(cardNumber: String) -> NSURL? {
+    fileprivate func buildURL(_ cardNumber: String) -> URL? {
         
-        let components = NSURLComponents(string: baseURLString)!
-        let item = NSURLQueryItem(name: "cardnumber", value: cardNumber)
-        var queryItems = [NSURLQueryItem]()
+        var components = URLComponents(string: baseURLString)!
+        let item = URLQueryItem(name: "cardnumber", value: cardNumber)
+        var queryItems = [URLQueryItem]()
         queryItems.append(item)
         components.queryItems = queryItems
         
-        return components.URL!
+        return components.url!
     }
     
 }

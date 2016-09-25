@@ -12,7 +12,7 @@ class HistoryStore {
     
     var history = [CardResult]()
     
-    func addResult(result: CardResult) {
+    func addResult(_ result: CardResult) {
         history.append(result)
     }
     
